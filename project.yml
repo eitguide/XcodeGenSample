@@ -1,4 +1,6 @@
 name: XcodeGenSample
+options:
+  carthageBuildPath: "./Carthage/Build"
 settings:
   DEVELOPMENT_TEAM: 9E87K75Q44
 targets:
@@ -31,31 +33,45 @@ targets:
       - carthage: RxCocoa
       - carthage: RxRelay
       - carthage: RxSwift
-      - target: SwiftStringHelper
-      - target: Config
+      - target: DynamicFramework
+      - target: StaticFramework
+      # - target: Database
     scheme:
       environmentVariables:
         ENABLE_SIGNPOST: YES
 
-  SwiftStringHelper:
+  DynamicFramework:
     type: framework
     platform: iOS
     deploymentTarget: "10.0"
-    sources: SwiftStringHelper
+    sources: DynamicFramework
     settings:
-      PRODUCT_BUNDLE_IDENTIFIER: com.nghianv.xcodegen.SwiftStringHelper
-      INFOPLIST_FILE: SwiftStringHelper/Info.plist
+      PRODUCT_BUNDLE_IDENTIFIER: com.nghianv.xcodegen.DynamicFramework
+      INFOPLIST_FILE: DynamicFramework/Info.plist
     dependencies:
       - carthage: RxCocoa
       - carthage: RxRelay
       - carthage: RxSwift
 
-  Config:
-    type: framework
+  StaticFramework:
+    type: framework.static
     platform: iOS
     deploymentTarget: "10.0"
-    sources: Config
+    sources: StaticFramework
     settings:
-      PRODUCT_BUNDLE_IDENTIFIER: com.nghianv.xcodegen.Config
-      INFOPLIST_FILE: Config/Info.plist
+      PRODUCT_BUNDLE_IDENTIFIER: com.nghianv.xcodegen.StaticFramework
+      INFOPLIST_FILE: StaticFramework/Info.plist
+    dependencies:
+      - carthage: RxCocoa
+      - carthage: RxRelay
+      - carthage: RxSwift
+
+  # Config:
+  #   type: framework
+  #   platform: iOS
+  #   deploymentTarget: "10.0"
+  #   sources: LocalFramework/Config
+  #   settings:
+  #     PRODUCT_BUNDLE_IDENTIFIER: com.nghianv.xcodegen.Config
+  #     INFOPLIST_FILE: LocalFramework/Config/Info.plist
 
