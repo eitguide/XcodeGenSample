@@ -1,0 +1,33 @@
+name: XcodeGenSample
+settings:
+  DEVELOPMENT_TEAM: 9E87K75Q44
+targets:
+  XcodeGenSample:
+    type: application
+    platform: iOS
+    deploymentTarget: "10.0"
+    sources:
+      - XcodeGenSample
+      - Vendor
+    configFiles:
+      Debug: configs/Debug.xcconfig
+      Release: configs/Release.xcconfig
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.nghianv.xcodegen
+        CODE_SIGN_ENTITLEMENTS: XcodeGenSample/XcodeGenSample.entitlements
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        SWIFT_OPTIMIZATION_LEVEL: "-Owholemodule"
+        SWIFT_OBJC_BRIDGING_HEADER: Bridge/Bridging-Header.h
+      configs:
+        Debug:
+          DEBUG_MODE: YES
+        Release:
+          DEBUG_MODE: NO
+    dependencies:
+      - carthage: RxCocoa
+      - carthage: RxRelay
+      - carthage: RxSwift
+    scheme:
+      environmentVariables:
+        ENABLE_SIGNPOST: YES
