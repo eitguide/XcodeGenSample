@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SwiftStringHelper
 
 class ViewController: UIViewController {
 

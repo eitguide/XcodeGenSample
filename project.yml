@@ -6,6 +6,8 @@ targets:
     type: application
     platform: iOS
     deploymentTarget: "10.0"
+    attributes:
+      ProvisioningStyle: Automatic
     sources:
       - XcodeGenSample
       - Vendor
@@ -14,6 +16,7 @@ targets:
       Release: configs/Release.xcconfig
     settings:
       base:
+        INFOPLIST_FILE: XcodeGenSample/Info.plist
         PRODUCT_BUNDLE_IDENTIFIER: com.nghianv.xcodegen
         CODE_SIGN_ENTITLEMENTS: XcodeGenSample/XcodeGenSample.entitlements
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
@@ -28,6 +31,31 @@ targets:
       - carthage: RxCocoa
       - carthage: RxRelay
       - carthage: RxSwift
+      - target: SwiftStringHelper
+      - target: Config
     scheme:
       environmentVariables:
         ENABLE_SIGNPOST: YES
+
+  SwiftStringHelper:
+    type: framework
+    platform: iOS
+    deploymentTarget: "10.0"
+    sources: SwiftStringHelper
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.nghianv.xcodegen.SwiftStringHelper
+      INFOPLIST_FILE: SwiftStringHelper/Info.plist
+    dependencies:
+      - carthage: RxCocoa
+      - carthage: RxRelay
+      - carthage: RxSwift
+
+  Config:
+    type: framework
+    platform: iOS
+    deploymentTarget: "10.0"
+    sources: Config
+    settings:
+      PRODUCT_BUNDLE_IDENTIFIER: com.nghianv.xcodegen.Config
+      INFOPLIST_FILE: Config/Info.plist
+
