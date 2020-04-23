@@ -1,8 +1,31 @@
 name: XcodeGenSample
 options:
-  carthageBuildPath: "./Carthage/Build"
+  preGenCommand: echo Before
+  postGenCommand: echo After
+  createIntermediateGroups: true
+  generateEmptyDirectories: true
+  groupSortPosition: top
+  
+packages:
+  SwiftyUtils:
+    url: https://github.com/tbaranes/SwiftyUtils
+    from: 5.0.0
+
+  SwiftyBeaver:
+    url: https://github.com/SwiftyBeaver/SwiftyBeaver
+    from: 1.0.0
+    
 settings:
   DEVELOPMENT_TEAM: 9E87K75Q44
+
+schemes:
+  XcodeGenSample:
+    build:
+      targets:
+        XcodeGenSample: all
+      parallelizeBuild: true
+      buildImplicitDependencies: true
+  
 targets:
   XcodeGenSample:
     type: application
@@ -10,12 +33,18 @@ targets:
     deploymentTarget: "10.0"
     attributes:
       ProvisioningStyle: Automatic
+
     sources:
       - XcodeGenSample
       - Vendor
+      - path: App/Sources
+        name: Sources
+      - path: Resources
+
     configFiles:
       Debug: configs/Debug.xcconfig
       Release: configs/Release.xcconfig
+
     settings:
       base:
         INFOPLIST_FILE: XcodeGenSample/Info.plist
@@ -35,6 +64,8 @@ targets:
       - carthage: RxSwift
       - target: DynamicFramework
       - target: StaticFramework
+      - package: SwiftyUtils
+      - package: SwiftyBeaver
       # - target: Database
     scheme:
       environmentVariables:
@@ -44,34 +75,38 @@ targets:
     type: framework
     platform: iOS
     deploymentTarget: "10.0"
-    sources: DynamicFramework
+    sources: 
+      - Libs/DynamicFramework/Sources
+      - path: Libs/DynamicFramework/Supporting Files/DynamicFramework.h
+        buildPhase: headers
+        headerVisibility: public
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: com.nghianv.xcodegen.DynamicFramework
-      INFOPLIST_FILE: DynamicFramework/Info.plist
+      INFOPLIST_FILE: Libs/DynamicFramework/Info.plist
     dependencies:
       - carthage: RxCocoa
       - carthage: RxRelay
       - carthage: RxSwift
 
   StaticFramework:
-    type: framework.static
+    type: framework
     platform: iOS
-    deploymentTarget: "10.0"
-    sources: StaticFramework
+    scheme:
+      gatherCoverageData: true
+    sources:
+      - Libs/StaticFramework/Sources
+      - path: Libs/StaticFramework/Supporting Files/StaticFramework.h
+        buildPhase: headers
+        headerVisibility: public
+
     settings:
       PRODUCT_BUNDLE_IDENTIFIER: com.nghianv.xcodegen.StaticFramework
-      INFOPLIST_FILE: StaticFramework/Info.plist
+      INFOPLIST_FILE: Libs/StaticFramework/Info.plist
+      IPHONEOS_DEPLOYMENT_TARGET: 10.0
     dependencies:
+      - sdk: Contacts.framework
+      - sdk: libc++.tbd
       - carthage: RxCocoa
       - carthage: RxRelay
       - carthage: RxSwift
-
-  # Config:
-  #   type: framework
-  #   platform: iOS
-  #   deploymentTarget: "10.0"
-  #   sources: LocalFramework/Config
-  #   settings:
-  #     PRODUCT_BUNDLE_IDENTIFIER: com.nghianv.xcodegen.Config
-  #     INFOPLIST_FILE: LocalFramework/Config/Info.plist
 
