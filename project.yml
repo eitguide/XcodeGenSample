@@ -33,7 +33,7 @@ targets:
     deploymentTarget: "10.0"
     attributes:
       ProvisioningStyle: Automatic
-
+    
     sources:
       - XcodeGenSample
       - Vendor
@@ -62,12 +62,12 @@ targets:
     dependencies:
       - carthage: RxCocoa
         linkType: static
-        findFrameworks: false
+        # findFrameworks: false
       - carthage: RxRelay
         linkType: static
-        findFrameworks: false
+        # findFrameworks: false
       - carthage: RxSwift
-        findFrameworks: false
+        # findFrameworks: false
         linkType: static
       - target: DynamicFramework
       - target: StaticFramework
@@ -77,6 +77,25 @@ targets:
     scheme:
       environmentVariables:
         # ENABLE_SIGNPOST: YES
+    # preBuildScripts:
+    #   - path: ./carthage_static_build.sh
+    #     name: My Script
+    #     inputFiles:
+    #       - $(SRCROOT)/file1
+    #       - $(SRCROOT)/file2
+    #     inputFileLists:
+    #       - $(SRCROOT)/inputFiles.xcfilelist
+    #     outputFiles:
+    #       - $(DERIVED_FILE_DIR)/file1
+    #       - $(DERIVED_FILE_DIR)/file2
+    #     outputFileLists:
+    #       - $(SRCROOT)/outputFiles.xcfilelist
+    # postCompileScripts:
+    #   - script: swiftlint
+    #     name: Swiftlint
+    # postBuildScripts:
+    #   - path: ./carthage_static_build.sh
+    #     name: My Final Script
 
   DynamicFramework:
     type: framework
